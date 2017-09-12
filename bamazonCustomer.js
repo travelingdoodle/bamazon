@@ -2,6 +2,7 @@
 var inquirer = require('inquirer');
 var mysql = require('mysql');
 
+//connects to sql database
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -80,7 +81,7 @@ function purchase(id, quantityInput) {
             console.log("\nWe trap hard, hold up. Lemme cop that for ya");
             console.log("If you want " + quantityInput + " " + response[0].product_name + " then you gotz tew pay $" + totalCost + ". Now, Get lost, my guy! \n");
 
-            connection.query('UPDATE Products SET stock_quantity = stock_quantity - ' + quantityInput + ' WHERE id = ' + id);
+            connection.query('UPDATE products SET stock_quantity = stock_quantity - ' + quantityInput + ' WHERE id = ' + id);
 
             process.exit()
         } else {

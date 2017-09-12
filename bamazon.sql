@@ -44,4 +44,7 @@ VALUES ("cars", "automobile", 50000, 100);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("handkerchiefs", "tools", 5, 170000);
 
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("cocaine", "is a hellova drug", 30000, 100);
+
 SELECT * FROM products;
