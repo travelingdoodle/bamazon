@@ -14,15 +14,15 @@ Come on down and take a ride!
 ### Next UP:
 ### Be a Customer!
 * Use the command line to run the program with ```node bamazonCustomer.js```
-! [Customer beginning shot] (/images/customer_start.png)
+![Customer beginning shot](/images/customer_start.png)
 * Follow the inquiries and prompts to make a decision. It's that simple!
-! [Customer interaction demo] (/images/customer_demo.png)
+![Customer interaction demo](/images/customer_demo.png)
 * The final price will be confirmed and the database is updated to relect the purchase
-! [Customer Demo Ending] (/images/customer_end.png)
+![Customer Demo Ending](/images/customer_end.png)
 
 ### Be a Manager!
 * Use the command line to run the program with ```node bamazonManager.js```
-! [Manager beginning Demo] (/images/manager_start.png)
+![Manager beginning Demo](/images/manager_start.png)
 * Choose from the list of prompts to make a decision. It's that simple!
 
 * What can you do?
@@ -30,7 +30,7 @@ Come on down and take a ride!
     * View Low Inventory 
     * Add to Inventory
     * Add New Products to Inventory
-! [Manager demo ] (/images/manager_demo.png)
+![Manager demo ](/images/manager_demo.png)
 * Your choices will be reflected in the bamazon database!
 
 
