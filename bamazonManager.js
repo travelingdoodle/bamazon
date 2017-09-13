@@ -68,33 +68,33 @@ function viewProducts() {
         console.log("\n //=================================================================//");
         process.exit()
     });
-   
+
 };
 
 function lowInventory() {
     connection.query("SELECT id, product_name, department_name, price, stock_quantity FROM products", function (err, response) {
         if (err) throw err;
-        if (response[0].stock_quantity <= 100) {
-
+        for (i = 0; response[0].stock_quantity <= 100; i++) {
             console.log("LOW INVENTORY ITEMS!");
             console.log("\n //==================================================================\\ \n");
             console.log("FOR YOUR REVIEW:");
-            console.log(response);
+            console.log(response[i]);
             console.log("\n //=================================================================//");
-        }
+            process.exit()
+        } 
     });
-    process.exit()
+
 };
 function addInventory() {
     connection.query("SELECT id, product_name, department_name, price, stock_quantity FROM products", function (err, result, fields) {
         if (err) throw err;
-        choicesArr = [];
-        function choicesArrMaker() {
+        let choicesArr = [];
+        function makeChoices() {
             for (let i = 0; i < result.length; i++) {
-                choicesArr.push = (result[i].product_name);
+                choicesArr.push(result[i].product_name);
             };
-
-        }
+        };
+        makeChoices();
         inquirer.prompt([
             {
                 type: 'list',
@@ -103,35 +103,41 @@ function addInventory() {
                 choices: choicesArr
             },
             {
+                type: 'list',
                 name: 'numbers',
                 message: "How many would you like to add?",
-                choices: [0, 100, 200, 500, 1000, 10000],
-                validate: function (value) {
-                    if (isNaN(value) === false) {
-                        return true;
-                    }
-                    return false;
-
-                }
+                choices: ["100", "200", "500", "1000", "10000"]
+                // validate: function (value) {
+                //     if (isNaN(value) === false) {
+                //         return true;
+                //     }
+                //     return false;
+                // }
             }
         ]).then(function (choice) {
             let productChoice = choice.addChoice;
             let productNumber = choice.numbers;
+            let newInventory = productNumber + result[0].stock_quantity;
             // updates database based on product_name and quantity choosen
-            connection.query('UPDATE products SET stock_quantity = stock_quantity + ' + productNumber + ' WHERE product_name = ' + productChoice);
-            process.exit();
-        })
+            var sql = "UPDATE products SET stock_quantity = '" + newInventory + "' WHERE product_name = '" + productChoice + "'";
+            console.log(sql);
+            connection.query(sql, function (err, result) {
+                if (err) throw err;
+                console.log(result.affectedRows + " record(s) updated");
+                process.exit()
+            });
+        });
     });
 };
 
 function newProduct() {
     inquirer.prompt([
         {
-            name: "newProductName",
+            name: "name",
             message: "What new item would you like to add to Inventory? (product_name)",
         },
         {
-            name: "departmentName",
+            name: "dept",
             message: "What department does this item belong to? (department_name)"
         },
         {
@@ -139,21 +145,22 @@ function newProduct() {
             message: "How much does this product cost?"
         },
         {
-            name: "quantitiy",
+            name: "quantity",
             message: "How many of this item are you putting into inventory, my guy?"
         }
     ]).then(function (newItems) {
-        let newName = newItems.newProductName;
-        let newDept = newItems.departmentName;
+        let newName = newItems.name;
+        let newDept = newItems.dept;
         let newPrice = newItems.price;
-        let newQuantity = newItems.quantity;
-        let sqlUpdate = "INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES(' " + newName + "  ', ' " + newDept + " ' , ' " + newPrice + " ', ' " + newQuantity + "  ' )"
+        let newQuantity = parseInt(newItems.quantity);
+        let sqlUpdate = "INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES(' " + newName + "  ', ' " + newItems.dept + " ' ," + newPrice + ", "+newQuantity+")";
+        console.log("squlUpdate let" + sqlUpdate);
         connection.query(sqlUpdate, function (err, result) {
             if (err) throw err;
-            console.log(newName + "added to record");
+            //console.log(newName + "added to record");
             process.exit()
         });
 
     });
-    
+
 };

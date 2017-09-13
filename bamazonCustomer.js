@@ -30,7 +30,7 @@ function questions() {
     inquirer.prompt([
         {
             name: "id",
-            message: "Would you like to sell your soul? What item (by ID) would you like?",
+            message: "Would you like to buy some things or stuff? What item (by ID) would you like?",
             validate: function (value) {
                 if (isNaN(value) === false) {
                     return true;
@@ -49,23 +49,6 @@ function questions() {
         var quantityInput = answers.quantity;
         var idInput = answers.id;
         purchase(idInput, quantityInput);
-
-        //    var idGiven = answers.id;  //I have the ID of the product 
-        //      
-        //    var price = "SELECT * FROM products WHERE ?";
-        //      
-        //    if (answers.quantity <= quantitee){
-        //        connection.query("UPDATE products SET stock_quantity = '" + answers.quantity + "' WHERE id=5");
-        //        //Update MySQL
-        //        //fufill customers request 
-        //        //show total cost of their purchase
-        //        console.log("Your Total Price is: " + price. * answers.quantity);  //price * quantity
-        //    }else{
-        //        
-        //        //Insufficient Quantity
-        //        console.log("Not Enough Cash, Stranger!");
-        //    }
-        //    console.log("Resident Evil 4");
     });
 }
 
@@ -76,19 +59,22 @@ function purchase(id, quantityInput) {
 
         if (quantityInput <= response[0].stock_quantity) {
 
-            var totalCost = response[0].price * quantityInput;
+            let totalCost = response[0].price * quantityInput;
 
             console.log("\nWe trap hard, hold up. Lemme cop that for ya");
             console.log("If you want " + quantityInput + " " + response[0].product_name + " then you gotz tew pay $" + totalCost + ". Now, Get lost, my guy! \n");
 
-            connection.query('UPDATE products SET stock_quantity = stock_quantity - ' + quantityInput + ' WHERE id = ' + id);
-
-            process.exit()
+            var newInventory = response[0].stock_quantity - parseInt(quantityInput);
+            var sql = "UPDATE products SET stock_quantity = '" + newInventory + "' WHERE id = '" + id + "'";
+            console.log(sql);
+            connection.query(sql, function (err, result) {
+                if (err) throw err;
+                console.log(result.affectedRows + " record(s) updated");
+                process.exit()
+            });
         } else {
             console.log("We ain't got enough 'o dem " + response[0].product_name + " , My Guy!! \n ");
             process.exit()
         };
-
     });
-
 };
