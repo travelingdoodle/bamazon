@@ -1,0 +1,24 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "Bamazon is an Amazon-like storefront that uses MySQL to take in orders from customers and deplete stock from the store's inventory, from the command line.",
+  "main": "bamazonCustomer.js",
+  "dependencies": {
+    "inquirer": "^3.2.3",
+    "mysql": "^2.14.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/travelingdoodle/bamazon.git"
+  },
+  "author": "reggie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/travelingdoodle/bamazon/issues"
+  },
+  "homepage": "https://github.com/travelingdoodle/bamazon#readme"
+}
